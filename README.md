@@ -89,6 +89,8 @@ helm install PrviacyEngineering/hawk
 
 See the [values.yaml](values.yaml) for configuration options.
 
+You can now see the generated Notes of Helm Chart, to know how to access the [Hawk Core Monitor UI].
+
 #### Docker
 
 The following Docker Images are available, when not choosing Helm:
@@ -115,23 +117,21 @@ which files to provide.
 
 ### Hawk Release
 
-To enable Hawk Release you have to install Flux and Flagger. Then you can configure to use the
-Metrics using Prometheus, see [Hawk Service](https://github.com/PrivacyEngineering/hawk-service) for
-more information on which mappings to use. You also need to configure Prometheus to scrape the
-Metrics.
+To enable Hawk Release, you have to install [Flux](https://github.com/fluxcd/flux)
+and [Flagger](https://github.com/fluxcd/flagger). Then you can configure to use the Metrics using
+Prometheus, see [Hawk Service](https://github.com/PrivacyEngineering/hawk-service) for more
+information on which mappings to use. You also need to configure Prometheus to scrape the Metrics.
 
 ### Hawk Build
 
-TODO
+To enable Hawk Build you have to install and configure
+the [OpenAPI Privacy Changes Service](https://github.com/TUB-CNPE-TB/openapi-privacy-changes-service)
+. Then it is possible to
+use [OpenAPI Privacy Alert GitHub Action](https://github.com/TUB-CNPE-TB/openapi-privacy-alert-action)
+.
 
-TODO:
+## Example
 
-- grafana load dashboards automatically
-- grafana configure json datasource the right way
-- add Envoy / Istio integration by default
-- change notes
-- create postgres database and user account according to their specified values
-- maybe auto generate a strong password and save it in a secret
-- add scaling for hawk service
-- add documentation for using yugabyte instead of default postgres
-- configure default resource consumption
+An example using the [WeaveWorks SockShop](https://github.com/microservices-demo/microservices-demo)
+, integrated with some of Hawk components can be
+found [here](https://github.com/PrivacyEngine/hawk-sockshop).

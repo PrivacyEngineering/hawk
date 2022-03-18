@@ -1,0 +1,26 @@
+{{if .Values.istio.enabled }}
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  # namespace is important because it is the namespace where the filter will act
+  name: actixgo-filter
+  namespace: {{ .Values.istio.namespace }}
+spec:
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          filterChain:
+            filter:
+              name: envoy.filters.network.http_connection_manager
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: actixgo-filter-config
+          config_discovery:
+            config_source:
+              ads: {}
+              initial_fetch_timeout: 0s # wait indefinitely to prevent bad Wasm fetch
+            type_urls: [ "type.googleapis.com/envoy.extensions.filters.http.wasm.v3.Wasm"]
+{{ end }}
