@@ -1,5 +1,7 @@
 # Hawk
 
+![workflow](https://github.com/PrivacyEngineering/hawk/actions/workflows/main.yml/badge.svg
+
 The Hawk Framework provides a way of tracking the dataflow between applications and allows for GDPR
 related tags to be added to the data references. It also features an analytical dashboard about the
 GDPR related information and integration for using the ratio of GDPR-tagged data in e.g. Flagger
@@ -84,7 +86,14 @@ The Helm Chart (WIP), installs the Hawk-Service, a default PostgreSQL database, 
 nginx + monitor + grafana) and the Istio / Envoy integration if selected.
 
 ```shell
+helm repo add https://github.com/PrivacyEngineering/hawk/releases/download/1.0.1
 helm install PrviacyEngineering/hawk
+```
+
+Replace VERSION with the [newest version](https://github.com/TUB-CNPE-TB/hawk/releases) of the chart.
+Alternatively, you can also download the hawk-VERSION.tgz of the release you wish and execute:
+```shell
+helm install ./hawk-VERSION.tgz
 ```
 
 See the [values.yaml](values.yaml) for configuration options.
