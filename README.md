@@ -1,6 +1,6 @@
 # Hawk
 
-![workflow](https://github.com/PrivacyEngineering/hawk/actions/workflows/main.yml/badge.svg
+![workflow](https://github.com/PrivacyEngineering/hawk/actions/workflows/main.yml/badge.svg)
 
 The Hawk Framework provides a way of tracking the dataflow between applications and allows for GDPR
 related tags to be added to the data references. It also features an analytical dashboard about the
