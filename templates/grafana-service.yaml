@@ -8,7 +8,7 @@ spec:
   type: {{ .Values.grafana.service.type }}
   ports:
     - port: {{ .Values.grafana.service.port }}
-      targetPort: http
+      targetPort: 3000
       protocol: TCP
       name: http
   selector:

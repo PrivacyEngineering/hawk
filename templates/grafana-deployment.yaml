@@ -17,6 +17,7 @@ spec:
       {{- end }}
       labels:
         app: "{{ include "hawk.fullname" . }}-grafana"
+        sidecar.istio.io/inject: "false"
     spec:
       {{- with .Values.grafana.imagePullSecrets }}
       imagePullSecrets:
@@ -29,14 +30,14 @@ spec:
         - name: "{{ include "hawk.fullname" . }}-grafana"
           securityContext:
             {{- toYaml .Values.grafana.securityContext | nindent 12 }}
-          image: "{{ .Values.grafana.image.repository }}:{{ .Values.grafana.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.grafana.image.repository }}:{{ .Values.grafana.image.tag | default "9.5.6" }}"
           imagePullPolicy: {{ .Values.grafana.image.pullPolicy }}
           env:
           - name: GF_INSTALL_PLUGINS
             value: simpod-json-datasource 0.3.0,novatec-sdg-panel
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 3000
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -61,14 +62,14 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.grafana.tolerations }}
       volumes:
       - configMap:
-          name: grafana
+          name: "{{ include "hawk.fullname" . }}-grafana"
           items:
           - key: hawk-datasource.yaml
             path: hawk-datasource.yaml
-        name: "{{ include "hawk.fullname" . }}-grafana"
+        name: grafana
+      {{- with .Values.grafana.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

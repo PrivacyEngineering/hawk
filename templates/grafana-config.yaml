@@ -6,18 +6,17 @@ metadata:
     {{- include "hawk.labels" . | nindent 4 }}
 data:
   hawk-datasource.yaml: |
-  {
-        "apiVersion": 1,
-        "datasources": [
-            {
-               "access":"proxy",
-                "editable": true,
-                "name": "json",
-                "orgId": 1,
-                "type": "json",
-                "url": "http:/{{ include "hawk.fullname" . }}-service",
-                "version": 1
-            }
-        ]
+    {
+      "apiVersion": 1,
+      "datasources": [
+        {
+          "access": "proxy",
+          "editable": true,
+          "name": "json",
+          "orgId": 1,
+          "type": "json",
+          "url": "http://{{ include "hawk.fullname" . }}-service",
+          "version": 1
+        }
+      ]
     }
-    

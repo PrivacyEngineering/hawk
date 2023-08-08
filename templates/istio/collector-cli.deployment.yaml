@@ -30,5 +30,5 @@ spec:
             - name: AMQP_DLQ
               value: "queue.collector.dlq"
             - name: COLLECTOR_URL
-              value: "http://collector.hawk-ns/api/usages/batch"
+              value: "http://{{ include "hawk.fullname" . }}-service.{{ .Release.Namespace }}/api/usages/batch"
 {{ end }}

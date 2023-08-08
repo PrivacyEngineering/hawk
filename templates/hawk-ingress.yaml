@@ -1,0 +1,41 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-gerrit-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.ingress.maxBodySize | default "50m" }}
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+    {{- if .Values.ingress.additionalAnnotations }}
+{{ toYaml .Values.ingress.additionalAnnotations  | indent 4 }}
+    {{- end }}
+spec:
+  rules:
+  - host: ""
+    http:
+      paths:
+      - pathType: Prefix
+        path: /()((api|webjars|v3).*)
+        backend:
+          service:
+            name: {{ include "hawk.fullname" . }}-service
+            port:
+              number: {{ .Values.service.service.port }}
+      - pathType: Prefix
+        path: /(dashboard.*)
+        backend:
+          service:
+            name: {{ include "hawk.fullname" . }}-grafana
+            port:
+              number: {{ .Values.grafana.service.port }}
+      - pathType: Prefix
+        path: /()(.*)
+        backend:
+          service:
+            name: {{ include "hawk.fullname" . }}-monitor
+            port:
+              number: {{ .Values.monitor.service.port }}
+
+{{- end }}
