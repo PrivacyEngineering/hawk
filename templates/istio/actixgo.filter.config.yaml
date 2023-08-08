@@ -26,7 +26,7 @@ spec:
                   runtime: envoy.wasm.runtime.v8
                   configuration:
                     "@type": "type.googleapis.com/google.protobuf.StringValue"
-                    value: "outbound|80||{{ include "hawk.fullname" . }}-service.{{ .Release.Namespace }}.svc.cluster.local"
+                    value: "outbound|80||collector-go-service.{{ .Release.Namespace }}.svc.cluster.local"
                   code:
                     remote:
                       # envoy api for http_uri: https://github.com/envoyproxy/envoy/blob/main/api/envoy/api/v2/core/http_uri.proto

@@ -12,6 +12,7 @@ metadata:
 {{ toYaml .Values.ingress.additionalAnnotations  | indent 4 }}
     {{- end }}
 spec:
+  ingressClassName: nginx
   rules:
   - host: ""
     http:
@@ -24,7 +25,7 @@ spec:
             port:
               number: {{ .Values.service.service.port }}
       - pathType: Prefix
-        path: /(dashboard.*)
+        path: /dashboard/(.*)
         backend:
           service:
             name: {{ include "hawk.fullname" . }}-grafana
