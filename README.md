@@ -86,7 +86,7 @@ The Helm Chart (WIP), installs the Hawk-Service, a default PostgreSQL database, 
 nginx + monitor + grafana) and the Istio / Envoy integration if selected.
 
 ```shell
-helm repo add https://github.com/PrivacyEngineering/hawk/releases/download/1.0.1
+helm repo add hawk https://github.com/PrivacyEngineering/hawk/releases/download/1.0.1
 helm install PrviacyEngineering/hawk
 ```
 
@@ -144,3 +144,7 @@ use [OpenAPI Privacy Alert GitHub Action](https://github.com/TUB-CNPE-TB/openapi
 An example using the [WeaveWorks SockShop](https://github.com/microservices-demo/microservices-demo)
 , integrated with some of Hawk components can be
 found [here](https://github.com/PrivacyEngine/hawk-sockshop).
+
+
+## Hawk Datasource URL
+hawk-service.hawk.svc.cluster.local
