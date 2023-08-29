@@ -28,3 +28,6 @@ dependencies:
   - name: postgresql
     repository: https://charts.bitnami.com/bitnami
     version: 12.6.6
+  - name: grafana
+    repository: https://charts.bitnami.com/bitnami
+    version: 9.0.7
