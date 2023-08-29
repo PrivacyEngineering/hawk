@@ -70,6 +70,29 @@ change the privacy policy accordingly.
 
 ## Deployment Guide
 
+1. Install the istio service mesh using `istioctl` with the demo profile:
+    ```
+    istioctl install --set profile=default -y
+    ```
+2. Create an ingress gateway for the hawk services:
+    ```
+    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    helm install nginx-ingress ingress-nginx/ingress-nginx
+    ```
+3. Create the namespace where hawk is intended to be applied:
+    ```
+    kubectl create namespace sock-shop
+    ```
+4. Install hawk core and all it's services:
+    ```
+    helm dependency update
+    helm install -f values.yaml hawk . --namespace hawk --create-namespace
+    ```
+5. Install the rest of the demo architecture:
+    ```
+    kubectl apply -f ./02.sock-shop/
+    ```
+
 ### Hawk Core
 
 This repository feature a Helm Chart which can be used to install this software in a Kubernetes
@@ -146,5 +169,5 @@ An example using the [WeaveWorks SockShop](https://github.com/microservices-demo
 found [here](https://github.com/PrivacyEngine/hawk-sockshop).
 
 
-## Hawk Datasource URL
-hawk-service.hawk.svc.cluster.local
+## Hawk Grafana Dashboard
+![Dashboard overview with four panels](./grafana/dashboard.png "Dashboard overview with four distinct panels")
