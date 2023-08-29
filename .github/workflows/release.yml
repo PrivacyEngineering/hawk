@@ -32,3 +32,4 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_GIT_REPO: helm-charts
           CR_OWNER: "${{ github.repository_owner }}"
+          CR_SKIP_EXISTING: true
