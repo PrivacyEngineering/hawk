@@ -31,9 +31,6 @@ spec:
             {{- toYaml .Values.monitor.securityContext | nindent 12 }}
           image: "{{ .Values.monitor.image.repository }}:{{ .Values.monitor.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.monitor.image.pullPolicy }}
-          env:
-          - name: GF_INSTALL_PLUGINS
-            value: simpod-json-datasource 0.3.0,novatec-sdg-panel
           ports:
             - name: http
               containerPort: 80
