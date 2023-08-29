@@ -170,4 +170,4 @@ found [here](https://github.com/PrivacyEngine/hawk-sockshop).
 
 
 ## Hawk Grafana Dashboard
-![Dashboard overview with four panels](./grafana/dashboard.png "Dashboard overview with four distinct panels")
+![Dashboard overview with four panels](./images/dashboard.png "Dashboard overview with four distinct panels")
