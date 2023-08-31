@@ -16,7 +16,7 @@ spec:
     spec:
       containers: 
       - name: grafana
-        image: grafana/grafana:9.5.6
+        image: grafana/grafana:8.5.0
         ports:
         - name: grafana
           containerPort: 3000
@@ -31,7 +31,7 @@ spec:
             name: grafana-providers
         env:
           - name: GF_INSTALL_PLUGINS
-            value: simpod-json-datasource 0.4.2, novatec-sdg-panel 4.0.3  
+            value: simpod-json-datasource 0.3.0, novatec-sdg-panel 4.0.3  
       volumes:
         - name: grafana-datasources
           configMap:
@@ -40,7 +40,7 @@ spec:
         - name: grafana-dashboards
           configMap:
               defaultMode: 420
-              name: main-dashboard
+              name: hawk-dashboards
         - name: grafana-providers
           configMap:
               defaultMode: 420
