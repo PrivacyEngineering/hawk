@@ -7,7 +7,7 @@ env:
 on:
   push:
     branches:
-      - v2
+      - master
 
 jobs:
   push-to-repo:
@@ -32,5 +32,5 @@ jobs:
         destination-repository-name: 'hawk-helm-charts'
         user-email: $GITHUB_ACTOR@users.noreply.github.com
         commit-message: pushed from $GITHUB_REF
-        target-directory: ${{ env.CHART_NAME }}
+        target-directory: charts/${{ env.CHART_NAME }}
         target-branch: master
