@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-gerrit-ingress
+  name: {{ .Release.Name }}-ingress
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.ingress.maxBodySize | default "50m" }}
     nginx.ingress.kubernetes.io/use-regex: "true"
@@ -24,13 +24,6 @@ spec:
             name: {{ include "hawk.fullname" . }}-service
             port:
               number: {{ .Values.service.service.port }}
-      - pathType: Prefix
-        path: /dashboard/(.*)
-        backend:
-          service:
-            name: {{ include "hawk.fullname" . }}-grafana
-            port:
-              number: {{ .Values.grafana.service.port }}
       - pathType: Prefix
         path: /()(.*)
         backend:

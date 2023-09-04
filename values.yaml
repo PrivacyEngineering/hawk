@@ -241,11 +241,6 @@ postgresql:
 
   affinity: {}
 
-istio:
-  enabled: true
-  namespace: sock-shop
-
-
 ingress:
   enabled: true
 
