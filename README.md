@@ -206,5 +206,16 @@ An example using the [WeaveWorks SockShop](https://github.com/microservices-demo
 found [here](https://github.com/PrivacyEngine/hawk-sockshop).
 
 
-## Hawk Grafana Dashboard
-![Dashboard overview with four panels](./images/dashboard.png "Dashboard overview with four distinct panels")
+## Hawk Grafana Dashboard Evaluation
+
+We provide 4 grafana dashboards:
+
+- Dashboard
+- Service Graph
+- Field Details
+- Endpoint Details
+
+A detailed explanation of the dashboards can be found [here](./grafana/README.md).
+
+### Hawk Monitor Overview Dashboard
+[![Dashboard overview with four panels](./grafana/images/overview.png "Dashboard overview with four distinct panels")](./grafana/README.md)
