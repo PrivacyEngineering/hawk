@@ -1,0 +1,328 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "This Dashboard shows detailed information on a specified field.",
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 8,
+    "iteration": 1693500322118,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "type": "simpod-json-datasource",
+          "uid": "PB1F47CFFDA9F0787"
+        },
+        "description": "",
+        "gridPos": {
+          "h": 4,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 8,
+        "options": {
+          "content": "This Dashboard shows detailed information on a specified field.\\\nSelect a privacy related field on the top left.\\\nClick on an endpoint to open a detailed endpoint overview dashboard.",
+          "mode": "markdown"
+        },
+        "pluginVersion": "8.5.0",
+        "title": "Description",
+        "transparent": true,
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "simpod-json-datasource",
+          "uid": "PB1F47CFFDA9F0787"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "displayMode": "auto",
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 12,
+          "x": 0,
+          "y": 4
+        },
+        "id": 6,
+        "options": {
+          "footer": {
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "8.5.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "simpod-json-datasource",
+              "uid": "PB1F47CFFDA9F0787"
+            },
+            "payload": "{\"fields\":[\"$fields\"]}",
+            "refId": "A",
+            "target": "field_requests"
+          }
+        ],
+        "title": "Total requests",
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "simpod-json-datasource",
+          "uid": "PB1F47CFFDA9F0787"
+        },
+        "description": "The Field Endpoints table is perhaps the most useful overview that hawk core monitor currently provides for the data controller in terms of privacy preserving\ninsights. On the top left can the privacy related field get selected. The Field Endpoints\npanel provides a list of all endpoints that include the selected field in their usages. The\nlist has the endpoint rows overwritten with links to the corresponding endpoint requests\ndashboards.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "displayMode": "auto",
+              "inspect": false
+            },
+            "links": [
+              {
+                "title": "Show Endpoint Details",
+                "url": "/d/ed/?var-endpoints=${__value.text}"
+              }
+            ],
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 11,
+          "w": 12,
+          "x": 12,
+          "y": 4
+        },
+        "id": 2,
+        "options": {
+          "footer": {
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "8.5.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "simpod-json-datasource",
+              "uid": "PB1F47CFFDA9F0787"
+            },
+            "payload": "{\"field\":\"$fields\"}",
+            "refId": "A",
+            "target": "field_endpoints"
+          }
+        ],
+        "title": "Field Endpoints",
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "simpod-json-datasource",
+          "uid": "PB1F47CFFDA9F0787"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 7
+        },
+        "id": 4,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "simpod-json-datasource",
+              "uid": "PB1F47CFFDA9F0787"
+            },
+            "payload": "{\"fields\":[\"$fields\"]}",
+            "refId": "A",
+            "target": "field_requests_time"
+          }
+        ],
+        "title": "Requests over time",
+        "type": "timeseries"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 36,
+    "style": "dark",
+    "tags": [
+      "Field Endpoints",
+      "Field Requests",
+      "Field Requests Over Time"
+    ],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": false,
+            "text": "user.name",
+            "value": "user.name"
+          },
+          "datasource": {
+            "type": "simpod-json-datasource",
+            "uid": "PB1F47CFFDA9F0787"
+          },
+          "definition": "{\"target\":\"fields\"} (JSON)",
+          "description": "The selected field, defined in the Configuration dashboard.",
+          "hide": 0,
+          "includeAll": false,
+          "label": "Field",
+          "multi": false,
+          "name": "fields",
+          "options": [],
+          "query": {
+            "format": "json",
+            "query": "{\"target\":\"fields\"}"
+          },
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Field Details",
+    "uid": "fd",
+    "version": 33,
+    "weekStart": ""
+  }

@@ -56,7 +56,7 @@ grafana:
     repository: grafana/grafana
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    tag: "8.5.0"
 
   imagePullSecrets: []
   nameOverride: ""
@@ -64,8 +64,11 @@ grafana:
 
   podAnnotations: {}
 
-  podSecurityContext: {}
-    # fsGroup: 2000
+  podSecurityContext:
+    fsGroup: 472
+    runAsUser: 472
+    supplementalGroups:
+      - 0
 
   securityContext: {}
     # capabilities:

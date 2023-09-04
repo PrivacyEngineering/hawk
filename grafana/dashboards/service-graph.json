@@ -1,0 +1,313 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "This service graph shows all observed services and the amount of API Requests between them.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "simpod-json-datasource",
+        "uid": "PB1F47CFFDA9F0787"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "content": "This service graph shows all observed services and the amount of API Requests between them.",
+        "mode": "markdown"
+      },
+      "pluginVersion": "8.5.0",
+      "title": "Description",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "simpod-json-datasource",
+        "uid": "PB1F47CFFDA9F0787"
+      },
+      "description": "This service graph shows all observed services and the amount of API Requests between them.",
+      "gridPos": {
+        "h": 21,
+        "w": 12,
+        "x": 0,
+        "y": 2
+      },
+      "id": 4,
+      "options": {
+        "dataMapping": {
+          "aggregationType": "service",
+          "baselineRtUpper": "",
+          "errorRateColumn": "",
+          "errorRateOutgoingColumn": "",
+          "extOrigin": "",
+          "extTarget": "",
+          "requestRateColumn": "requests",
+          "requestRateOutgoingColumn": "",
+          "responseTimeColumn": "",
+          "responseTimeOutgoingColumn": "",
+          "showDummyData": false,
+          "sourceColumn": "initiator",
+          "targetColumn": "",
+          "type": ""
+        },
+        "drillDownLink": "",
+        "externalIcons": [
+          {
+            "filename": "web",
+            "pattern": "web"
+          },
+          {
+            "filename": "message",
+            "pattern": "jms"
+          },
+          {
+            "filename": "database",
+            "pattern": "jdbc"
+          },
+          {
+            "filename": "http",
+            "pattern": "http"
+          }
+        ],
+        "filterEmptyConnections": true,
+        "icons": [
+          {
+            "filename": "java",
+            "pattern": "java"
+          },
+          {
+            "filename": "star_trek",
+            "pattern": "spok|star trek"
+          }
+        ],
+        "showBaselines": false,
+        "showConnectionStats": true,
+        "showDebugInformation": false,
+        "style": {
+          "dangerColor": "rgb(196, 22, 42)",
+          "healthyColor": "rgb(87, 148, 242)",
+          "noDataColor": "rgb(123, 123, 138)"
+        },
+        "sumTimings": true,
+        "timeFormat": "m"
+      },
+      "pluginVersion": "4.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "simpod-json-datasource",
+            "uid": "PB1F47CFFDA9F0787"
+          },
+          "payload": "",
+          "refId": "A",
+          "target": "service_initiator_requests_table"
+        }
+      ],
+      "title": "Service Graph",
+      "type": "novatec-sdg-panel"
+    },
+    {
+      "datasource": {
+        "type": "simpod-json-datasource",
+        "uid": "PB1F47CFFDA9F0787"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 2
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "simpod-json-datasource",
+            "uid": "PB1F47CFFDA9F0787"
+          },
+          "payload": "",
+          "refId": "A",
+          "target": "requests_time"
+        }
+      ],
+      "title": "Combined Requests / Second",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "simpod-json-datasource",
+        "uid": "PB1F47CFFDA9F0787"
+      },
+      "description": "This shows the amount of requests on a per service drilled down by the initiator service. This overview provides all necessary information to construct the Service Graph panel.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "id": 6,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.5.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "simpod-json-datasource",
+            "uid": "PB1F47CFFDA9F0787"
+          },
+          "payload": "",
+          "refId": "A",
+          "target": "service_initiator_requests_table"
+        }
+      ],
+      "title": "Service Initiator Requests ",
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [
+    "Service Graph",
+    "Service Initiator Requests"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Service Requests Graph",
+  "uid": "sg",
+  "version": 14,
+  "weekStart": ""
+}

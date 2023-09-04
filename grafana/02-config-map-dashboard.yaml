@@ -1,63 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "hawk.fullname" . }}-grafana-providers
-  labels:
-    {{- include "hawk.labels" . | nindent 4 }}
-data:
-  dashboards.yaml: |-
-    apiVersion: 1
-    providers: 
-      - name: 'Hawk'
-        updateIntervalSeconds: 10
-        allowUiUpdates: true
-        options:
-          path: /var/lib/grafana/dashboards
-          foldersFromFilesStructure: true
-        type: file
-
----
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "hawk.fullname" . }}-grafana-datasource
-  labels:
-    {{- include "hawk.labels" . | nindent 4 }}
-data:
-  HAWK-JSON.yaml : |-
-    apiVersion: 1
-
-    providers: 
-      - name: 'Hawk Dashboards'
-        updateIntervalSeconds: 10
-        allowUiUpdates: true
-        options:
-          path: /var/lib/grafana/dashboards
-          foldersFromFilesStructure: true
-        type: file
-
-    deleteDatasources:
-      - name: HAWK-JSON
-        orgId: 1
-
-    datasources:
-      - name: HAWK-JSON
-        type: simpod-json-datasource
-        access: proxy
-        orgid: 1
-        isDefault: true
-        url: http://{{ include "hawk.fullname" . }}-service.{{.Release.Namespace}}.svc.cluster.local
-        editable: true
-
----
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "hawk.fullname" . }}-grafana-dashboards
-  labels:
-    {{- include "hawk.labels" . | nindent 4 }}
+  name: hawk-dashboards
+  namespace: hawk
 data:
   overview-dashboard.json : |-
     {
