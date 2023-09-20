@@ -56,6 +56,10 @@ spec:
               readOnly: false
             - mountPath: /etc/grafana/provisioning/dashboards
               name: {{ include "hawk.fullname" . }}-grafana-providers
+            - mountPath: /etc/grafana/grafana.ini
+              subPath: grafana.ini
+              name: {{ include "hawk.fullname" . }}-grafana-config
+              readOnly: true
           resources:
             {{- toYaml .Values.grafana.resources | nindent 12 }}
       {{- with .Values.grafana.nodeSelector }}
@@ -67,6 +71,10 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: {{ include "hawk.fullname" . }}-grafana-config
+          configMap:
+              defaultMode: 420
+              name: {{ include "hawk.fullname" . }}-grafana-config
         - name: {{ include "hawk.fullname" . }}-grafana-datasources
           configMap:
               defaultMode: 420

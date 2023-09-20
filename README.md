@@ -37,7 +37,7 @@ the Framework integration allows to interact with the Hawk API directly inside t
 the possibility to intercept encrypted and also external traffic, the application itself must be
 modified. The Service Mesh solution can be installed without modifying any application. Both
 solutions can be active in parallel. Currently the only integrations
-are [EnvoyProxy / Istio Service Mesh Integration]() and [Java Framework Integration]() for HTTP and
+are [EnvoyProxy / Istio Service Mesh Integration](integrations/hawk-envoy-plugin/README.md) and [Java Framework Integration]() for HTTP and
 JSON bodies only.
 
 When a Packet is intercepted it will be parsed, according to the protocol used. The parsing searches
@@ -95,28 +95,21 @@ change the privacy policy accordingly.
 
 ### Deployment through Helm
 
-1. Install the istio service mesh using `istioctl` with the demo profile:
+1. Add the helm chart repository:
     ```
-    istioctl install --set profile=default -y
+    helm repo add hawk https://privacyengineering.github.io/hawk-helm-charts/
     ```
-2. Create an ingress gateway for the hawk services:
-    ```
-    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-    helm install nginx-ingress ingress-nginx/ingress-nginx
-    ```
-3. Create the namespace where hawk is intended to be applied:
-    ```
-    kubectl create namespace sock-shop
-    ```
-4. Install hawk core and all it's services:
+2. Modify values in [`values.yaml`](values.yaml) to your needs.
+3. Install hawk core and all it's services:
     ```
     helm dependency update
-    helm install -f values.yaml hawk . --namespace hawk --create-namespace
+    helm install hawk hawk/hawk --namespace hawk --create-namespace
     ```
-5. Install the rest of the demo architecture:
+4. Access the hawk-core-monitor and hawk-service via ingress:
     ```
-    kubectl apply -f ./02.sock-shop/
+    kubectl get ingress -n hawk
     ```
+5. Add an integration to the hawk framework (see [Integrations](#integrations) for more information)
 
 ### Deloyment alternatives
 
@@ -127,6 +120,13 @@ The [Java integration](https://github.com/PrivacyEngineering/hawk-integration-ja
 every environment. It needs a connection to the Hawk Service. When possible, the Envoy Integration
 is preferred as it's less effort to install. You must choose at least one integration.
 
+## Integrations
+
+The Hawk Framework can be extended through integrations. Currently there are two integrations (for HTTP and JSON bodies only):
+* [EnvoyProxy / Istio Service Mesh Integration](integrations/hawk-envoy-plugin/README.md)
+* [Java Framework Integration]()
+
+Both integrations communicate with the hawk-service via the exposed REST API.
 
 <details><summary> Hawk Core</summary>
 

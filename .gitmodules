@@ -1,0 +1,4 @@
+[submodule "integrations/hawk-envoy-plugin"]
+	path = integrations/hawk-envoy-plugin
+	url = https://github.com/PrivacyEngineering/hawk-envoy-plugin.git
+	branch = v2

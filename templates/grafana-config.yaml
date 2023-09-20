@@ -17,6 +17,18 @@ data:
         type: file
 
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "hawk.fullname" . }}-grafana-config
+  labels:
+    {{- include "hawk.labels" . | nindent 4 }}
+data:
+  grafana.ini: |-
+    [server]
+    root_url = %(protocol)s://%(domain)s:%(http_port)s/grafana/
+    serve_from_sub_path = true
+---
 
 apiVersion: v1
 kind: ConfigMap
