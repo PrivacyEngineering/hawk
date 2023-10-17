@@ -17,6 +17,7 @@ spec:
       {{- end }}
       labels:
         app: "{{ include "hawk.fullname" . }}-grafana"
+        sidecar.istio.io/inject: "false"
     spec:
       {{- with .Values.grafana.imagePullSecrets }}
       imagePullSecrets:
@@ -29,14 +30,14 @@ spec:
         - name: "{{ include "hawk.fullname" . }}-grafana"
           securityContext:
             {{- toYaml .Values.grafana.securityContext | nindent 12 }}
-          image: "{{ .Values.grafana.image.repository }}:{{ .Values.grafana.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.grafana.image.repository }}:{{ .Values.grafana.image.tag | default "8.5.0" }}"
           imagePullPolicy: {{ .Values.grafana.image.pullPolicy }}
           env:
           - name: GF_INSTALL_PLUGINS
-            value: simpod-json-datasource 0.3.0,novatec-sdg-panel
+            value: simpod-json-datasource 0.3.0 , novatec-sdg-panel 4.0.3
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 3000
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -47,10 +48,18 @@ spec:
               path: /
               port: http
           volumeMounts:
-          - name: grafana
-            mountPath: /etc/grafana/provisioning/datasources/hawk-datasource.yaml
-            subPath: hawk-datasource.yaml
-            readOnly: true
+            - mountPath: /etc/grafana/provisioning/datasources
+              name: {{ include "hawk.fullname" . }}-grafana-datasources
+              readOnly: false
+            - mountPath: /var/lib/grafana/dashboards/Hawk
+              name: {{ include "hawk.fullname" . }}-grafana-dashboards
+              readOnly: false
+            - mountPath: /etc/grafana/provisioning/dashboards
+              name: {{ include "hawk.fullname" . }}-grafana-providers
+            - mountPath: /etc/grafana/grafana.ini
+              subPath: grafana.ini
+              name: {{ include "hawk.fullname" . }}-grafana-config
+              readOnly: true
           resources:
             {{- toYaml .Values.grafana.resources | nindent 12 }}
       {{- with .Values.grafana.nodeSelector }}
@@ -61,14 +70,42 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.grafana.tolerations }}
       volumes:
-      - configMap:
-          name: grafana
-          items:
-          - key: hawk-datasource.yaml
-            path: hawk-datasource.yaml
-        name: "{{ include "hawk.fullname" . }}-grafana"
+        - name: {{ include "hawk.fullname" . }}-grafana-config
+          configMap:
+              defaultMode: 420
+              name: {{ include "hawk.fullname" . }}-grafana-config
+        - name: {{ include "hawk.fullname" . }}-grafana-datasources
+          configMap:
+              defaultMode: 420
+              name: {{ include "hawk.fullname" . }}-grafana-datasource
+        - name: {{ include "hawk.fullname" . }}-grafana-dashboards
+          configMap:
+              defaultMode: 420
+              name: {{ include "hawk.fullname" . }}-grafana-dashboards
+        - name: {{ include "hawk.fullname" . }}-grafana-providers
+          configMap:
+              defaultMode: 420
+              name: {{ include "hawk.fullname" . }}-grafana-providers
+      {{- with .Values.grafana.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ include "hawk.fullname" . }}-grafana"
+  labels:
+    {{- include "hawk.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.grafana.service.type }}
+  ports:
+    - port: {{ .Values.grafana.service.port }}
+      targetPort: 3000
+      protocol: TCP
+      name: http
+  selector:
+    app: "{{ include "hawk.fullname" . }}-grafana"

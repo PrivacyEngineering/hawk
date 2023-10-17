@@ -33,25 +33,20 @@ spec:
           imagePullPolicy: {{ .Values.service.image.pullPolicy }}
           env:
           - name: SPRING_DATASOURCE_URL
-            value: "jdbc:postgresql://{{ include "hawk.fullname" . }}-postgres:{{ .Values.postgres.service.port }}/postgres"
+            value: "jdbc:postgresql://{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc/{{ .Values.postgresql.auth.database }}"
           - name: SPRING_DATASOURCE_USERNAME
-            value: postgres
+            value: {{ .Values.postgresql.auth.username }}
           - name: SPRING_DATASOURCE_PASSWORD
-            value: postgres
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-postgresql
+                key: password
           - name: SPRING_PROFILES_ACTIVE
             value: {{ .Values.service.profiles }}
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
           resources:
             {{- toYaml .Values.service.resources | nindent 12 }}
       {{- with .Values.service.nodeSelector }}

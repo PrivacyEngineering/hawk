@@ -1,62 +1,15 @@
 # Default values for hawk.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-nginx:
-  replicaCount: 1
-
-  image:
-    repository: nginx
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
-
-  imagePullSecrets: []
-  nameOverride: ""
-  fullnameOverride: ""
-
-  podAnnotations: {}
-
-  podSecurityContext: {}
-    # fsGroup: 2000
-
-  securityContext: {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-    # runAsUser: 1000
-
-  service:
-    type: ClusterIP
-    port: 80
-
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  nodeSelector: {}
-
-  tolerations: []
-
-  affinity: {}
 
 grafana:
   replicaCount: 1
 
   image:
-    repository: grafana
+    repository: grafana/grafana
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    tag: "8.5.0"
 
   imagePullSecrets: []
   nameOverride: ""
@@ -64,8 +17,11 @@ grafana:
 
   podAnnotations: {}
 
-  podSecurityContext: {}
-    # fsGroup: 2000
+  podSecurityContext:
+    fsGroup: 472
+    runAsUser: 472
+    supplementalGroups:
+      - 0
 
   securityContext: {}
     # capabilities:
@@ -101,10 +57,10 @@ service:
   replicaCount: 1
 
   image:
-    repository: p4skal/hawk-service
+    repository: ghcr.io/privacyengineering/hawk-service
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    tag: "latest"
 
   imagePullSecrets: []
   nameOverride: ""
@@ -149,13 +105,15 @@ service:
   affinity: {}
 
 monitor:
+
+  apiUrl: "http://hawk.example.com/api"
+
   replicaCount: 1
 
   image:
-    repository: p4skal/hawk-core-monitor
+    repository: ghcr.io/privacyengineering/hawk-core-monitor
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    tag: "master"
 
   imagePullSecrets: []
   nameOverride: ""
@@ -196,23 +154,13 @@ monitor:
 
   affinity: {}
 
-postgres:
-  replicaCount: 1
+postgresql:
 
-  image:
-    repository: postgres
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
-
-  imagePullSecrets: []
-  nameOverride: ""
-  fullnameOverride: ""
-
-  data:
-    database: "postgres"
-    username: "postgres"
-    password: "postgres"
+  auth:
+    database: "mydb"
+    username: "myuser"
+    password: "mysecretpassword"
+    enablePostgresUser: true
 
   podAnnotations: {}
 
@@ -249,9 +197,11 @@ postgres:
 
   affinity: {}
 
-istio:
-  enabled: false
-  namespace: default
+ingress:
+  enabled: true
+  className: "nginx"
+  host: "hawk.example.com"
+
 
 serviceAccount:
   # Specifies whether a service account should be created

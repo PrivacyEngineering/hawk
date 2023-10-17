@@ -1,0 +1,288 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "This dashboard shows the requests of a specific endpoint over time",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 12,
+  "iteration": 1693500188496,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "simpod-json-datasource",
+        "uid": "PB1F47CFFDA9F0787"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "content": "This dashboard shows the amount of requests of a specific endpoint over time.\\\nOn the top right hand side, the time frame for this analysis is specified.\\\nOn the top left, the graph can be updated for each existing endpoint.",
+        "mode": "markdown"
+      },
+      "pluginVersion": "8.5.0",
+      "title": "Description",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "simpod-json-datasource",
+        "uid": "PB1F47CFFDA9F0787"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "links": [
+            {
+              "title": "Show this endpoint requests time series",
+              "url": "/d/ed/?var-endpoints=${__value.text}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byType",
+              "options": "number"
+            },
+            "properties": [
+              {
+                "id": "links"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "endpoint"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 700
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 4,
+      "links": [],
+      "options": {
+        "footer": {
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": true
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.5.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "simpod-json-datasource",
+            "uid": "PB1F47CFFDA9F0787"
+          },
+          "payload": "",
+          "refId": "A",
+          "target": "endpoint_requests_table"
+        }
+      ],
+      "title": "Endpoint Requests",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "simpod-json-datasource",
+        "uid": "PB1F47CFFDA9F0787"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.5.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "simpod-json-datasource",
+            "uid": "PB1F47CFFDA9F0787"
+          },
+          "payload": "{\"endpoint\":\"$endpoints\"}",
+          "refId": "A",
+          "target": "requests_time"
+        }
+      ],
+      "title": "Endpoint Requests",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [
+    "Endpoint Requests",
+    "Endpoint Requests Over Time"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "http:DELETE:front-end.sock-shop.svc.cluster.local:/cart",
+          "value": "http:DELETE:front-end.sock-shop.svc.cluster.local:/cart"
+        },
+        "datasource": {
+          "type": "simpod-json-datasource",
+          "uid": "PB1F47CFFDA9F0787"
+        },
+        "definition": "{   \"target\": \"endpoints\" } (JSON)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Endpoint",
+        "multi": false,
+        "name": "endpoints",
+        "options": [],
+        "query": {
+          "format": "json",
+          "query": "{   \"target\": \"endpoints\" }"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Endpoint Details",
+  "uid": "ed",
+  "version": 6,
+  "weekStart": ""
+}
