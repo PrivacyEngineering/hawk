@@ -106,7 +106,7 @@ service:
 
 monitor:
 
-  apiUrl: "http://hawk.example.com"
+  apiUrl: "http://monitor.hawk.local"
 
   replicaCount: 1
 
@@ -200,7 +200,7 @@ postgresql:
 ingress:
   enabled: true
   className: "nginx"
-  host: "hawk.example.com"
+  host: "monitor.hawk.local"
 
 
 serviceAccount:

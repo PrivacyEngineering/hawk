@@ -20,51 +20,48 @@ Please find its publication here: https://arxiv.org/abs/2306.02496
 
 ## Overview
 
-The Hawk Framework provides a way of tracking the dataflow between applications and allows for GDPR
-related tags to be added to the data references. It also features an analytical dashboard about the
-GDPR related information and integration for using the ratio of GDPR-tagged data in e.g. Flagger
-Canary releases.
+The Hawk Framework provides a way of tracking the data flow between cloud-native microservice-based applications and allows for GDPR-related tags to be added to the data references. It also features an analytical dashboard about the GDPR-related information and integration for using the ratio of GDPR-tagged data in e.g. Flagger Canary releases.
 
 <details>
 <summary>Concept and Goal</summary>
 
 ### Concept
 
-The concept is to archive this goal is to intercept the traffic between the individual applications
-/ services. This idea is called Hawk Core. It can be either done by (A) Framework Integration inside
-the application or outside the application using (B) Service Mesh Integration, if available. While
-the Framework integration allows to interact with the Hawk API directly inside the Service and gives
-the possibility to intercept encrypted and also external traffic, the application itself must be
-modified. The Service Mesh solution can be installed without modifying any application. Both
-solutions can be active in parallel. Currently the only integrations
-are [EnvoyProxy / Istio Service Mesh Integration](integrations/hawk-envoy-plugin/README.md) and [Java Framework Integration]() for HTTP and
-JSON bodies only.
+The goal of Hawk is to intercept the traffic between individual applications and services. 
+This goal is realized by the Hawk Core contribution. 
+It can be either done by (*A*) Framework Integration inside the application or outside the application using (*B*) Service Mesh Integration, if available. 
+The framework integration (*A*) enables the interaction with the Hawk API directly inside the service and provides the possibility to intercept encrypted and external traffic. However, to accomplish this, the application itself must be modified.
+The Service Mesh solution (*B*) can be installed without modifying any application. 
+Both solutions can be active in parallel.
 
-When a Packet is intercepted it will be parsed, according to the protocol used. The parsing searches
-for possible custom data / personal data or more concretely for atomic data values of type string or
-number. So the User Email might be one example of this (and not the whole User object). The idea is
-to build a selector for each individual atomic data field and saving it. This selector includes the
-destination host and some kind of endpoint abstraction. In case of HTTP the method and the path. And
-also the a phase which might be request or response, the namespace of the data which is header or
-body in case of HTTP, the format which describes if this data was found in a key-value based format
-or in some more complex format like JSON and finally the path which is protocol and format dependend
-to describe where this data lies inside the packet. When implemented correctly, these values should
-provide a protocol independent and context aware selector. Using the selector, it is also possible
-to find / track data in other packets with same endpoint. To reduce size many on these selectors
-might be aggregated to reduce the size. One example right here might be a list of users. We dont
-need to have a selector for each individual User Email, instead we only need to provide a reference
-to the array and which path for each entry inside the array. E.g. `$.users.[0].email`
-, `$.users.[1].email` ... -> `$.users.[*].email`. This aggregated selector is called `UsageField`.
-For each such packet parsed we might get a list of `UsageField`s. This list is tagged with some
-metadata and represents one `Usage` object.
+Currently, we provide the [EnvoyProxy / Istio Service Mesh Integration](integrations/hawk-envoy-plugin/README.md) to illustrate option *B* and [Java Framework Integration]() to illustrate option *A* for HTTP and JSON bodies only.
 
-GDPR relevant data is added using `Field`s and `Mapping`s. A field again represents one atomic data
-unit like a User Email. We can also add a description, some legal bases, whether it is personal data
-/ special categories personal data and many more describing information. The next component is
-the `Mapping`, which can be created at max once per endpoint. This mapping then specifies a list
-of `MappingField`s, where each individual `MappingField` represents a mapping between a `Field` and
-a `UsageField`. When every endpoint is mapped accordingly, it is possible for example to see from
-where and when a User Email is sent to which other application / service and with which other data.
+When a Packet is intercepted it will be parsed, according to the protocol used. 
+The parsing searches for possible custom data / personal data or more concretely for atomic data values of type string or number. An example of this is the user.email field (and not the whole user object). 
+For each individual atomic data field, a selector is constructed and then saved. 
+This selector includes the destination host and some kind of endpoint abstraction. 
+In the case of HTTP, this includes:
+- the method and the path as well as a phase in which the packet was transferred such as either request or response, 
+- the namespace of the data which is either header or body, 
+- the format which describes if this data was found in a key-value-based format or a more complex format like JSON and finally 
+- the path which is protocol and format -dependent which describes where this data lies inside the packet. 
+
+When implemented correctly, these values should provide a protocol-independent and context-aware selector. 
+Using the selector, it is also possible to find or track data in other packets of the same endpoint.
+Many of these selectors are aggregated to reduce their size. 
+An example of this is a list of users within a packet.
+We don't need to have a selector for individual user.email references, instead we only need to provide a reference to the array and which path for each entry inside the array. 
+E.g. `$.users.[0].email`, `$.users.[1].email` ... -> `$.users.[*].email`. 
+This aggregated selector is called `UsageField`.
+For each recorded packet, we get a list of `UsageField`s. 
+This list is tagged with some metadata and represents one `Usage` object.
+
+GDPR-relevant data is added using `Field`s and `Mapping`s. 
+A `Field` hereby represents one atomic data unit like a user email. 
+We can also add a description, some legal bases, whether it is personal data and special categories, personal data, and many more describing information. 
+The next component is the `Mapping`, which can be created at max once per endpoint. 
+This mapping then specifies a list of `MappingField`s, where each `MappingField` represents a mapping between a `Field` and a `UsageField`. 
+When every endpoint is mapped accordingly, it is possible, for example, to see from where and when a user email is sent to which other application or service and with what data.
 
 The [Hawk Service](https://github.com/PrivacyEngineering/hawk-service) is the central component for
 all of these entities, as all integrations submit their `Usage`s to here. Also `Mapping`s
@@ -103,7 +100,7 @@ change the privacy policy accordingly.
 3. Install hawk core and all it's services:
     ```
     helm dependency update
-    helm install hawk hawk/hawk --namespace hawk --create-namespace
+    helm install hawk hawk/hawk --namespace hawk --create-namespace -f values.yaml
     ```
 4. Access the hawk-core-monitor and hawk-service via ingress:
     ```
@@ -164,7 +161,7 @@ variables described in [Hawk Service](https://github.com/PrivacyEngineering/hawk
 
 For Hawk Core Monitor things get a little bit more complicated as it consists of two components.
 First the [Configuration UI](https://github.com/PrivacyEngineering/hawk-core-monitor). This
-component needs to have access to the Hawk Service. By default it expects the Hawk Service API to be
+component needs to have access to the Hawk Service. By default, it expects the Hawk Service API to be
 available reverse-proxied on the path. To change that you can provide an Environment variable. The
 second component is a Grafana instance with specific Plugins, Datasource and Dashboards.
 See [Grafana Deployment](templates/grafana-deployment.yaml)
